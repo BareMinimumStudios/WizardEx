@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.function.Consumer;
 
-import com.github.clevernucleus.dataattributes.api.DataAttributesAPI;
-import com.github.clevernucleus.dataattributes.api.attribute.IEntityAttribute;
+import com.github.clevernucleus.dataattributes_dc.api.DataAttributesAPI;
+import com.github.clevernucleus.dataattributes_dc.api.attribute.IEntityAttribute;
 import com.github.clevernucleus.playerex.PlayerEx;
 import com.github.clevernucleus.playerex.api.EntityAttributeSupplier;
 import com.github.clevernucleus.playerex.api.ExAPI;
@@ -18,11 +18,12 @@ import com.github.clevernucleus.playerex.api.client.PageLayer;
 import com.github.clevernucleus.playerex.api.client.RenderComponent;
 import com.github.clevernucleus.playerex.client.gui.widget.ScreenButtonWidget;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -30,11 +31,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.spell_power.api.MagicSchool;
+import net.spell_power.SpellPowerMod;
+import net.spell_power.api.SpellPowerMechanics;
+import net.spell_power.api.SpellSchool;
 import net.spell_power.api.SpellPower;
+import net.spell_power.api.SpellSchools;
 
 @Environment(EnvType.CLIENT)
 public class MagicPageLayer extends PageLayer {
@@ -56,129 +61,119 @@ public class MagicPageLayer extends PageLayer {
     }
 
     private boolean canRefund() {
-		return this.playerData.refundPoints() > 0;
-	}
-	
-	private void forEachScreenButton(Consumer<ScreenButtonWidget> consumer) {
-		this.children().stream().filter(e -> e instanceof ScreenButtonWidget).forEach(e -> consumer.accept((ScreenButtonWidget)e));
-	}
+        return this.playerData.refundPoints() > 0;
+    }
+
+    private void forEachScreenButton(Consumer<ScreenButtonWidget> consumer) {
+        this.children().stream().filter(e -> e instanceof ScreenButtonWidget)
+                .forEach(e -> consumer.accept((ScreenButtonWidget) e));
+    }
 
     private void buttonPressed(ButtonWidget buttonIn) {
-        ScreenButtonWidget button = (ScreenButtonWidget)buttonIn;
+        ScreenButtonWidget button = (ScreenButtonWidget) buttonIn;
         EntityAttributeSupplier attribute = EntityAttributeSupplier.of(button.key());
-        DataAttributesAPI.ifPresent(this.client.player, attribute, (Object)null, amount -> {
+        DataAttributesAPI.ifPresent(this.client.player, attribute, (Object) null, amount -> {
             double value = this.canRefund() ? -1.0D : 1.0D;
-            ClientUtil.modifyAttributes(this.canRefund() ? PacketType.REFUND : PacketType.SKILL, c -> c.accept(attribute, value));
-            this.client.player.playSound(PlayerEx.SP_SPEND_SOUND, SoundCategory.NEUTRAL, ExAPI.getConfig().skillUpVolume(), 1.5F);
-            return (Object)null;
+            ClientUtil.modifyAttributes(this.canRefund() ? PacketType.REFUND : PacketType.SKILL,
+                    c -> c.accept(attribute, value));
+            this.client.player.playSound(PlayerEx.SP_SPEND_SOUND, SoundCategory.NEUTRAL,
+                    ExAPI.getConfig().skillUpVolume(), 1.5F);
+            return (Object) null;
         });
     }
 
-    private void buttonTooltip(ButtonWidget buttonIn, MatrixStack matrices, int mouseX, int mouseY) {
-        ScreenButtonWidget button = (ScreenButtonWidget) buttonIn;
-        Identifier lvl = new Identifier("playerex:level");
-        Identifier key = button.key();
-
-        if (key.equals(lvl)) {
-            int requiredXp = ExAPI.getConfig().requiredXp(this.client.player);
-            int currentXp = this.client.player.experienceLevel;
-            String progress = "(" + currentXp + "/" + requiredXp + ")";
-            Text tooltip = (Text.translatable("playerex.gui.page.attributes.tooltip.button.level", progress)).formatted(Formatting.GRAY);
-
-            this.renderTooltip(matrices, tooltip, mouseX, mouseY);
-        } else {
-            Supplier<EntityAttribute> attribute = DataAttributesAPI.getAttribute(key);
-            DataAttributesAPI.ifPresent(this.client.player, attribute, (Object) null, value -> {
-                Text text = Text.translatable(attribute.get().getTranslationKey());
-                String type = "playerex.gui.page.attributes.tooltip.button." + (this.canRefund() ? "refund" : "skill");
-                Text tooltip = (Text.translatable(type)).append(text).formatted(Formatting.GRAY);
-
-                this.renderTooltip(matrices, tooltip, mouseX, mouseY);
-                return (Object) null;
-            });
-        }
-    }
-
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        MatrixStack matrices = context.getMatrices();
+
         matrices.push();
         matrices.scale(scaleX.get(), scaleY.get(), scaleZ);
 
-        COMPONENTS.forEach(component -> component.renderText(this.client.player, matrices, this.textRenderer, this.x,
+        COMPONENTS.forEach(component -> component.renderText(this.client.player, context, this.textRenderer, this.x,
                 this.y, scaleX.get(), scaleY.get()));
 
-//         this.textRenderer.draw(matrices, Text.of("Put character level points"), (this.x + 15) /
-//         scaleX.get(), (this.y + 20) / scaleY.get(), 4210752);
-//        this.textRenderer.draw(matrices, Text.of("into specific schools of magic"), (this.x + 15) /
-//                scaleX.get(), (this.y + 27) / scaleY.get(), 4210752);
+        // this.textRenderer.draw(matrices, Text.of("Put character level points"),
+        // (this.x + 15) /
+        // scaleX.get(), (this.y + 20) / scaleY.get(), 4210752);
+        // this.textRenderer.draw(matrices, Text.of("into specific schools of magic"),
+        // (this.x + 15) /
+        // scaleX.get(), (this.y + 27) / scaleY.get(), 4210752);
 
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.fire_header"), (this.x + 25) / scaleX.get(), (this.y + 40) / scaleY.get(),
-                4210752);
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.frost_header"), (this.x + 25) / scaleX.get(), (this.y + 60) / scaleY.get(),
-                4210752);
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.arcane_header"), (this.x + 25) / scaleX.get(),
-                (this.y + 80) / scaleY.get(), 4210752);
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.healing_header"), (this.x + 25) / scaleX.get(),
-                (this.y + 100) / scaleY.get(), 4210752);
-//        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.lightning"), (this.x + 30) / scaleX.get(),
-//        (this.y + 85) / scaleY.get(), 4210752);
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.fire_header"),
+                (int) ((this.x + 25) / scaleX.get()), (int) ((this.y + 40) / scaleY.get()),
+                4210752, false);
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.frost_header"),
+                (int) ((this.x + 25) / scaleX.get()), (int) ((this.y + 60) / scaleY.get()),
+                4210752, false);
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.arcane_header"),
+                (int) ((this.x + 25) / scaleX.get()),
+                (int) ((this.y + 80) / scaleY.get()), 4210752, false);
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.healing_header"),
+                (int) ((this.x + 25) / scaleX.get()),
+                (int) ((this.y + 100) / scaleY.get()), 4210752, false);
 
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.crit_chance_header"), (this.x + 95) / scaleX.get(),
-                (this.y + 50) / scaleY.get(), 4210752);
+        // this.textRenderer.draw(matrices,
+        // Text.translatable("wizardex.gui.page.tooltip.lightning"), (this.x + 30) /
+        // scaleX.get(),
+        // (this.y + 85) / scaleY.get(), 4210752);
 
-        this.textRenderer.draw(matrices, Text.translatable("wizardex.gui.page.tooltip.crit_damage_header"), (this.x + 95) / scaleX.get(),
-                (this.y + 65) / scaleY.get(), 4210752);
+//        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_chance_header"),
+//                (int) ((this.x + 95) / scaleX.get()),
+//                (int) ((this.y + 50) / scaleY.get()), 4210752, false);
+//
+//        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_damage_header"),
+//                (int) ((this.x + 95) / scaleX.get()),
+//                (int) ((this.y + 65) / scaleY.get()), 4210752, false);
 
         matrices.pop();
 
-        COMPONENTS.forEach(component -> component.renderTooltip(this.client.player, this::renderTooltip, matrices,
+        COMPONENTS.forEach(component -> component.drawTooltip(this.client.player, context::drawTooltip, context,
                 this.textRenderer, this.x, this.y, mouseX, mouseY, scaleX.get(), scaleY.get()));
     }
 
     @Override
-    public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+    public void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         // Set texture to get icons from
         // MUST BE 256x256 !!!
-        RenderSystem.setShaderTexture(0, schools);
 
         // Fire Icon
-        this.drawTexture(matrices, this.x + 7, this.y + 38, 0, 0, 16, 16);
+        context.drawTexture(schools, this.x + 7, this.y + 38, 0, 0, 16, 16);
         // Frost Icon
-        this.drawTexture(matrices, this.x + 8, this.y + 58, 16, 0, 16, 16);
+        context.drawTexture(schools, this.x + 8, this.y + 58, 16, 0, 16, 16);
         // Arcane Icon
-        this.drawTexture(matrices, this.x + 8, this.y + 78, 48, 0, 16, 16);
+        context.drawTexture(schools, this.x + 8, this.y + 78, 48, 0, 16, 16);
         // Healing Icon
-        this.drawTexture(matrices, this.x + 8, this.y + 105, 64, 0, 16, 16);
+        context.drawTexture(schools, this.x + 8, this.y + 105, 64, 0, 16, 16);
 
         // add the button to level up each school of magic
         this.forEachScreenButton(button -> {
-			Identifier key = button.key();
-			Identifier lvl = new Identifier("playerex:level");
-			EntityAttributeSupplier attribute = EntityAttributeSupplier.of(key);
-			PlayerEntity player = this.client.player;
-			
-			DataAttributesAPI.ifPresent(player, attribute, (Object)null, value -> {
-				if(BUTTON_KEYS.contains(key)) {
-					double max = ((IEntityAttribute)attribute.get()).maxValue();
-					
-					if(key.equals(lvl)) {
-						button.active = value < max && player.experienceLevel >= ExAPI.getConfig().requiredXp(player);
-					} else {
-						double modifierValue = this.playerData.get(attribute);
-						
-						if(this.canRefund()) {
-							button.active = modifierValue >= 1.0D;
-						} else {
-							button.active = modifierValue < max && this.playerData.skillPoints() >= 1;
-						}
-						
-						button.alt = this.canRefund();
-					}
-				}
-				
-				return (Object)null;
-			});
-		});
+            Identifier key = button.key();
+            Identifier lvl = new Identifier("playerex:level");
+            EntityAttributeSupplier attribute = EntityAttributeSupplier.of(key);
+            PlayerEntity player = this.client.player;
+
+            DataAttributesAPI.ifPresent(player, attribute, (Object) null, value -> {
+                if (BUTTON_KEYS.contains(key)) {
+                    double max = ((IEntityAttribute) attribute.get()).maxValue();
+
+                    if (key.equals(lvl)) {
+                        button.active = value < max && player.experienceLevel >= ExAPI.getConfig().requiredXp(player);
+                    } else {
+                        double modifierValue = this.playerData.get(attribute);
+
+                        if (this.canRefund()) {
+                            button.active = modifierValue >= 1.0D;
+                        } else {
+                            button.active = modifierValue < max && this.playerData.skillPoints() >= 1;
+                        }
+
+                        button.alt = this.canRefund();
+                    }
+                }
+
+                return (Object) null;
+            });
+        });
     }
 
     @Override
@@ -186,11 +181,49 @@ public class MagicPageLayer extends PageLayer {
         super.init();
         this.playerData = ExAPI.PLAYER_DATA.get(this.client.player);
 
+        var x = 69;
+
         // Fire level button
-        this.addDrawableChild(new ScreenButtonWidget(this.parent, 69, 40, 204, 0, 11, 10, BUTTON_KEYS.get(0), this::buttonPressed, this::buttonTooltip));
-        this.addDrawableChild(new ScreenButtonWidget(this.parent, 69, 60, 204, 0, 11, 10, BUTTON_KEYS.get(1), this::buttonPressed, this::buttonTooltip));
-        this.addDrawableChild(new ScreenButtonWidget(this.parent, 69, 80, 204, 0, 11, 10, BUTTON_KEYS.get(2), this::buttonPressed, this::buttonTooltip));
-        this.addDrawableChild(new ScreenButtonWidget(this.parent, 69, 100, 204, 0, 11, 10, BUTTON_KEYS.get(3), this::buttonPressed, this::buttonTooltip));
+        this.addDrawableChild(createAttributeButton(x, 40, BUTTON_KEYS.get(0), this::buttonPressed));
+        this.addDrawableChild(createAttributeButton(x, 60, BUTTON_KEYS.get(1), this::buttonPressed));
+        this.addDrawableChild(createAttributeButton(x, 80, BUTTON_KEYS.get(2), this::buttonPressed));
+        this.addDrawableChild(createAttributeButton(x, 100, BUTTON_KEYS.get(3), this::buttonPressed));
+    }
+
+    private Tooltip createAttributeTooltip(Identifier key) {
+        Identifier lvl = new Identifier("playerex:level");
+
+        if (key.equals(lvl)) {
+            int requiredXp = ExAPI.getConfig().requiredXp(this.client.player);
+            int currentXp = this.client.player.experienceLevel;
+            String progress = "(" + currentXp + "/" + requiredXp + ")";
+            Text tooltip = (Text.translatable("playerex.gui.page.attributes.tooltip.button.level", progress))
+                    .formatted(Formatting.GRAY);
+
+            return Tooltip.of(tooltip);
+        }
+
+        Supplier<EntityAttribute> attribute = DataAttributesAPI.getAttribute(key);
+
+        return DataAttributesAPI.ifPresent(this.client.player, attribute, null, value -> {
+            Text text = Text.translatable(attribute.get().getTranslationKey());
+            String type = "playerex.gui.page.attributes.tooltip.button." + (this.canRefund() ? "refund" : "skill");
+            Text tooltip = (Text.translatable(type)).append(text).formatted(Formatting.GRAY);
+
+            return Tooltip.of(tooltip);
+        });
+    }
+
+    private MutableText narrationButtonTooltip(Supplier<MutableText> textSupplier) {
+        return textSupplier.get();
+    }
+
+    private ScreenButtonWidget createAttributeButton(int x, int y, Identifier key,
+            ButtonWidget.PressAction pressAction) {
+        var button = new ScreenButtonWidget(this.parent, x, y, 204, 0, 11, 10, key, pressAction,
+                this::narrationButtonTooltip);
+        button.setTooltip(this.createAttributeTooltip(key));
+        return button;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerAll() {
@@ -235,28 +268,34 @@ public class MagicPageLayer extends PageLayer {
 
     static {
         // SECTION: Show Skill Points/Level
-//        COMPONENTS.add(RenderComponent.of(ExAPI.LEVEL, value -> {
-//            return Text.translatable("playerex.gui.page.attributes.text.level", Math.round(value)).formatted(Formatting.DARK_GRAY);
-//        }, value -> {
-//            List<Text> tooltip = new ArrayList<Text>();
-//            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[0]")).formatted(Formatting.GRAY));
-//            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[1]")).formatted(Formatting.GRAY));
-//            tooltip.add(Text.empty());
-//            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[2]", ExAPI.getConfig().skillPointsPerLevelUp())).formatted(Formatting.GRAY));
-//            tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[0]").formatted(Formatting.GRAY));
-//            tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[1]").formatted(Formatting.GRAY));
-//            tooltip.add(Text.empty());
-//            tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[2]", ExAPI.getConfig().skillPointsPerLevelUp()).formatted(Formatting.GRAY));
-//            return tooltip;
-//        }, 80, 130));
+        // COMPONENTS.add(RenderComponent.of(ExAPI.LEVEL, value -> {
+        // return Text.translatable("playerex.gui.page.attributes.text.level",
+        // Math.round(value)).formatted(Formatting.DARK_GRAY);
+        // }, value -> {
+        // List<Text> tooltip = new ArrayList<Text>();
+        // tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[0]")).formatted(Formatting.GRAY));
+        // tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[1]")).formatted(Formatting.GRAY));
+        // tooltip.add(Text.empty());
+        // tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.level[2]",
+        // ExAPI.getConfig().skillPointsPerLevelUp())).formatted(Formatting.GRAY));
+        // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[0]").formatted(Formatting.GRAY));
+        // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[1]").formatted(Formatting.GRAY));
+        // tooltip.add(Text.empty());
+        // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.level[2]",
+        // ExAPI.getConfig().skillPointsPerLevelUp()).formatted(Formatting.GRAY));
+        // return tooltip;
+        // }, 80, 130));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            return Text.translatable("playerex.gui.page.attributes.text.skill_points", ExAPI.PLAYER_DATA.get(entity).skillPoints()).formatted(Formatting.DARK_GRAY);
+            return Text.translatable("playerex.gui.page.attributes.text.skill_points",
+                    ExAPI.PLAYER_DATA.get(entity).skillPoints()).formatted(Formatting.DARK_GRAY);
         }, entity -> {
             List<Text> tooltip = new ArrayList<Text>();
-            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[0]")).formatted(Formatting.GRAY));
-            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[1]")).formatted(Formatting.GRAY));
-           // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[0]").formatted(Formatting.GRAY));
-           // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[1]").formatted(Formatting.GRAY));
+            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[0]"))
+                    .formatted(Formatting.GRAY));
+            tooltip.add((Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[1]"))
+                    .formatted(Formatting.GRAY));
+            // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[0]").formatted(Formatting.GRAY));
+            // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[1]").formatted(Formatting.GRAY));
             return tooltip;
         }, 8, 25));
 
@@ -292,7 +331,7 @@ public class MagicPageLayer extends PageLayer {
             List<Text> tooltip = new ArrayList<Text>();
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.arcane_specialization")));
 
-             ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerArcane());
+            ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerArcane());
             return tooltip;
         }, 56, 80));
 
@@ -307,35 +346,32 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 56, 100));
 
-
-        COMPONENTS.add(RenderComponent.of(entity -> {
-            var critChance = SpellPower.getCriticalChance(entity) * 100;
-            var statFormatted = new DecimalFormat("###");
-            return Text.of( statFormatted.format(critChance) + "%");
-        }, entity -> {
-            List<Text> tooltip = new ArrayList<Text>();
-            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_chance")));
-            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
-            return tooltip;
-        }, 143, 50));
-        COMPONENTS.add(RenderComponent.of(entity -> {
-            var critDmg = SpellPower.getCriticalMultiplier(entity) * 100;
-            var statFormatted = new DecimalFormat("###");
-            return Text.of(statFormatted.format(critDmg) + "%");
-        }, entity -> {
-            List<Text> tooltip = new ArrayList<Text>();
-            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_damage")));
-            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
-            return tooltip;
-        }, 143, 65));
-
-
+//        COMPONENTS.add(RenderComponent.of(entity -> {
+//            var critChance; // unable to find suitable replacement
+//            var statFormatted = new DecimalFormat("###");
+//            return Text.of(statFormatted.format(critChance) + "%");
+//        }, entity -> {
+//            List<Text> tooltip = new ArrayList<Text>();
+//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_chance")));
+//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+//            return tooltip;
+//        }, 143, 50));
+//        COMPONENTS.add(RenderComponent.of(entity -> {
+//            var critDmg; // unable to find suitable replacement
+//            var statFormatted = new DecimalFormat("###");
+//            return Text.of(statFormatted.format(critDmg) + "%");
+//        }, entity -> {
+//            List<Text> tooltip = new ArrayList<Text>();
+//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_damage")));
+//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+//            return tooltip;
+//        }, 143, 65));
 
         // SECTION: Spellpower Stats
         // show resulting stats from SpellPower API
         // -----------------------------------------
         COMPONENTS.add(RenderComponent.of(entity -> {
-            var school = SpellPower.getSpellPower(MagicSchool.FIRE, entity);
+            var school = SpellPower.getSpellPower(SpellSchools.FIRE, entity);
             var value = school.baseValue();
             var statFormatted = new DecimalFormat("#.##");
             return Text.of(statFormatted.format(value));
@@ -346,7 +382,7 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 32, 47));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            var school = SpellPower.getSpellPower(MagicSchool.FROST, entity);
+            var school = SpellPower.getSpellPower(SpellSchools.FROST, entity);
             var value = school.baseValue();
             var statFormatted = new DecimalFormat("###.##");
             return Text.of(statFormatted.format(value));
@@ -357,7 +393,7 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 32, 67));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            var school = SpellPower.getSpellPower(MagicSchool.HEALING, entity);
+            var school = SpellPower.getSpellPower(SpellSchools.HEALING, entity);
             var value = school.baseValue();
             return Text.of(String.valueOf(value));
         }, entity -> {
@@ -366,7 +402,7 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 32, 107));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            var school = SpellPower.getSpellPower(MagicSchool.ARCANE, entity);
+            var school = SpellPower.getSpellPower(SpellSchools.ARCANE, entity);
             var value = school.baseValue();
             var statFormatted = new DecimalFormat("###.##");
             return Text.of(statFormatted.format(value));

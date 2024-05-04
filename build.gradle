@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.1-SNAPSHOT'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id 'maven-publish'
 		id "com.modrinth.minotaur" version "2.+"
 }
@@ -20,7 +20,7 @@ repositories {
 	mavenCentral()
 	maven {
 		name = "Ladysnake"
-		url = "https://ladysnake.jfrog.io/artifactory/mods"
+		url = "https://maven.ladysnake.org/releases"
 	}
 	maven {
 		name = "Shedaniel"
@@ -74,8 +74,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// PlayerEx
-	modImplementation "maven.modrinth:data-attributes:${project.dataattributes_version}"
-	modImplementation "maven.modrinth:offline-player-cache:${project.opc_version}"
+	modImplementation "maven.modrinth:data-attributes-directors-cut:${project.dataattributes_version}"
+	modImplementation "maven.modrinth:opc-directors-cut:${project.opc_version}"
 
 	// Cardinal-Components
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}") {
@@ -90,7 +90,7 @@ dependencies {
 
 	modImplementation include("eu.pb4:placeholder-api:${project.placeholder_api}")
 	implementation 'net.objecthunter:exp4j:0.4.8'
-	modImplementation "maven.modrinth:playerex:${project.playerex_version}"
+	modImplementation "maven.modrinth:playerex-directors-cut:${project.playerex_version}"
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
@@ -101,7 +101,9 @@ dependencies {
 	}
 
 	// Spell power attributes
-	modImplementation "maven.modrinth:spell-power:0.9.12+1.19-fabric"
+	modImplementation "maven.modrinth:spell-power:${project.spell_power_version}-fabric"
+
+	implementation include("com.github.ZsoltMolnarrr:TinyConfig:2.3.2")
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

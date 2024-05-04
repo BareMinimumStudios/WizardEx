@@ -13,7 +13,7 @@ public class Client implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        WizardEx.LOGGER.info("RUNNING CIENT INIT");
+        WizardEx.LOGGER.info("RUNNING CLIENT INIT");
         ClientLoginNetworking.registerGlobalReceiver(NetworkFactory.CONFIG, NetworkFactoryClient::loginQueryReceived);
         ClientPlayNetworking.registerGlobalReceiver(NetworkFactory.NOTIFY, NetworkFactoryClient::notifiedLevelUp);
 
