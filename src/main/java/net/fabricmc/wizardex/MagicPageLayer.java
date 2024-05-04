@@ -35,9 +35,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.spell_power.SpellPowerMod;
-import net.spell_power.api.SpellPowerMechanics;
-import net.spell_power.api.SpellSchool;
 import net.spell_power.api.SpellPower;
 import net.spell_power.api.SpellSchools;
 
