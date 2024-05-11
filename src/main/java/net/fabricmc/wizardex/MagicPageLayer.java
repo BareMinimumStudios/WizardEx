@@ -354,7 +354,7 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 143, 50));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            Double critDmg =  entity.getAttributeValue(GetSpellPowerCritDamage().get());
+            Double critDmg = entity.getAttributeValue(GetSpellPowerCritDamage().get());
             var statFormatted = new DecimalFormat("###");
             return Text.of(statFormatted.format(critDmg) + "%");
         }, entity -> {
