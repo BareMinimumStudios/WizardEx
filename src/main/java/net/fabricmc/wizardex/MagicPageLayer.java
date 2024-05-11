@@ -114,13 +114,13 @@ public class MagicPageLayer extends PageLayer {
         // scaleX.get(),
         // (this.y + 85) / scaleY.get(), 4210752);
 
-//        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_chance_header"),
-//                (int) ((this.x + 95) / scaleX.get()),
-//                (int) ((this.y + 50) / scaleY.get()), 4210752, false);
-//
-//        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_damage_header"),
-//                (int) ((this.x + 95) / scaleX.get()),
-//                (int) ((this.y + 65) / scaleY.get()), 4210752, false);
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_chance_header"),
+                (int) ((this.x + 95) / scaleX.get()),
+                (int) ((this.y + 50) / scaleY.get()), 4210752, false);
+
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_damage_header"),
+                (int) ((this.x + 95) / scaleX.get()),
+                (int) ((this.y + 65) / scaleY.get()), 4210752, false);
 
         matrices.pop();
 
@@ -343,26 +343,26 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 56, 100));
 
-//        COMPONENTS.add(RenderComponent.of(entity -> {
-//            var critChance; // unable to find suitable replacement
-//            var statFormatted = new DecimalFormat("###");
-//            return Text.of(statFormatted.format(critChance) + "%");
-//        }, entity -> {
-//            List<Text> tooltip = new ArrayList<Text>();
-//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_chance")));
-//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
-//            return tooltip;
-//        }, 143, 50));
-//        COMPONENTS.add(RenderComponent.of(entity -> {
-//            var critDmg; // unable to find suitable replacement
-//            var statFormatted = new DecimalFormat("###");
-//            return Text.of(statFormatted.format(critDmg) + "%");
-//        }, entity -> {
-//            List<Text> tooltip = new ArrayList<Text>();
-//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_damage")));
-//            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
-//            return tooltip;
-//        }, 143, 65));
+        COMPONENTS.add(RenderComponent.of(entity -> {
+            Double critChance = entity.getAttributeValue(GetSpellPowerCritChance().get());
+            var statFormatted = new DecimalFormat("###");
+            return Text.of(statFormatted.format(critChance) + "%");
+        }, entity -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_chance")));
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+            return tooltip;
+        }, 143, 50));
+        COMPONENTS.add(RenderComponent.of(entity -> {
+            Double critDmg =  entity.getAttributeValue(GetSpellPowerCritDamage().get());
+            var statFormatted = new DecimalFormat("###");
+            return Text.of(statFormatted.format(critDmg) + "%");
+        }, entity -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_damage")));
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+            return tooltip;
+        }, 143, 65));
 
         // SECTION: Spellpower Stats
         // show resulting stats from SpellPower API
