@@ -103,7 +103,7 @@ dependencies {
 	// Spell power attributes
 	modImplementation "maven.modrinth:spell-power:${project.spell_power_version}-fabric"
 
-	implementation include("com.github.ZsoltMolnarrr:TinyConfig:2.3.2")
+	implementation include("com.github.ZsoltMolnarrr:TinyConfig:${project.tiny_config_version}")
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.

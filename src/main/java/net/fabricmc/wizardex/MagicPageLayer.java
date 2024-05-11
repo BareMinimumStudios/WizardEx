@@ -140,7 +140,7 @@ public class MagicPageLayer extends PageLayer {
         // Arcane Icon
         context.drawTexture(schools, this.x + 8, this.y + 78, 48, 0, 16, 16);
         // Healing Icon
-        context.drawTexture(schools, this.x + 8, this.y + 105, 64, 0, 16, 16);
+        context.drawTexture(schools, this.x + 8, this.y + 95, 64, 0, 16, 16);
 
         // add the button to level up each school of magic
         this.forEachScreenButton(button -> {

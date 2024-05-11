@@ -1,4 +1,4 @@
-# WidzardEx
+# WizardEX
 
 ![WizardEX Menu](https://nextcloud.divnectar.com/s/FzqNi2JSxmwSMLq/preview)
 
