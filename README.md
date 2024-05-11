@@ -44,11 +44,7 @@ Mage: more raw spellpower, has a bit more spell haste, has 3 less hearts, wither
 
 ## Will I support xx loader or xx version??
 
-I will only support versions 1.19.2 and 1.19-3 for Fabric for the foreseeable future.
-
-If heavily requested I will consider a Forge version.
-
-
+We currently support 1.20.1, and will consider future updates.
 
 ## Attribution
 
