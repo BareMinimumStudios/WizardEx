@@ -1,4 +1,4 @@
-package net.fabricmc.wizardex;
+package com.bibireden.wizardex;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -47,11 +47,11 @@ public class MagicPageLayer extends PageLayer {
     private PlayerData playerData;
 
     private static final List<RenderComponent> COMPONENTS = new ArrayList<RenderComponent>();
-    public static final Identifier GUI = new Identifier("wizardex", "textures/gui/schools.png");
-    public static final Identifier schools = new Identifier("wizardex", "textures/gui/schools.png");
+    public static final Identifier GUI = new Identifier(WizardEX.ID, "textures/gui/schools.png");
+    public static final Identifier schools = new Identifier(WizardEX.ID, "textures/gui/schools.png");
 
-    private static final List<Identifier> BUTTON_KEYS = ImmutableList.of(WizardEx.spell_power_fire,
-            WizardEx.spell_power_frost, WizardEx.spell_power_arcane, WizardEx.spell_power_healing);
+    private static final List<Identifier> BUTTON_KEYS = ImmutableList.of(WizardEX.spell_power_fire,
+            WizardEX.spell_power_frost, WizardEX.spell_power_arcane, WizardEX.spell_power_healing);
 
     public MagicPageLayer(HandledScreen<?> parent, ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(parent, handler, inventory, title);
@@ -224,42 +224,42 @@ public class MagicPageLayer extends PageLayer {
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerAll() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_all);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_all);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerFire() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_fire);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_fire);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerFrost() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_frost);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_frost);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerLightning() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_lightning);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_lightning);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerHealing() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_healing);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_healing);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerArcane() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_arcane);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_arcane);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerCritChance() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_crit_chance);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_crit_chance);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerCritDamage() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_crit_damage);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.spell_power_crit_damage);
         return spellPowerSupplier;
     }
 
@@ -296,7 +296,7 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 8, 25));
 
-        // SECTION: WizardEx Stats
+        // SECTION: WizardEX Stats
         // add Indiviual magic school stats
         // ----------------------------------
         COMPONENTS.add(RenderComponent.of(GetSpellPowerFire(), value -> {

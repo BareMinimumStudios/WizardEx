@@ -1,4 +1,4 @@
-package net.fabricmc.wizardex;
+package com.bibireden.wizardex;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -10,34 +10,31 @@ import com.github.clevernucleus.playerex.api.EntityAttributeSupplier;
 import com.github.clevernucleus.playerex.api.ExAPI;
 
 
-public class WizardEx implements ModInitializer {
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger("WizardEx -------------------------");
-	
+public class WizardEX implements ModInitializer {
+	public static final String ID = "wizardex";
+	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
+
 
 	// Overall spell stat gain from int levels
-	public static final Identifier spell_power_all = new Identifier("wizardex:spell_power_all");
+	public static final Identifier spell_power_all = new Identifier(ID, "spell_power_all");
 
 	// Indvidual Spell Levels
-	public static final Identifier spell_power_fire = new Identifier("wizardex:spell_power_fire");
-	public static final Identifier spell_power_frost = new Identifier("wizardex:spell_power_frost");
-	public static final Identifier spell_power_lightning = new Identifier("wizardex:spell_power_lightning");
-	public static final Identifier spell_power_arcane = new Identifier("wizardex:spell_power_arcane");
+	public static final Identifier spell_power_fire = new Identifier(ID, "spell_power_fire");
+	public static final Identifier spell_power_frost = new Identifier(ID, "spell_power_frost");
+	public static final Identifier spell_power_lightning = new Identifier(ID, "spell_power_lightning");
+	public static final Identifier spell_power_soul = new Identifier(ID, "spell_power_soul");
+	public static final Identifier spell_power_arcane = new Identifier(ID, "spell_power_arcane");
+	public static Identifier spell_power_healing = new Identifier(ID, "spell_power_healing");
+
 	public static final Identifier spell_power_crit_chance = new Identifier("spell_power:critical_chance");
 	public static final Identifier spell_power_crit_damage = new Identifier("spell_power:critical_damage");
-	public static Identifier spell_power_healing = new Identifier("wizardex:spell_power_healing");
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-		LOGGER.info("Starting WizardEx!");
+		LOGGER.debug("WizardEX is preparing magic!");
 		registerRefundConditions();
 	}
-	
+
 	private void registerRefundConditions() {
 		ExAPI.registerRefundCondition((data, player) -> {
 			var attribute = EntityAttributeSupplier.of(spell_power_fire);

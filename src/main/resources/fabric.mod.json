@@ -1,37 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "wizardex",
-  "version": "${version}",
-  "name": "WizardEx: Directors Cut",
-  "description": "A ported mod that allows improving your Wizarding spell stats through leveing up in PlayerEx.",
-  "authors": [
-    "Sewdohe",
-    "pokesmells",
-    "MerryweatherLost"
-  ],
-  "contact": {
-    "homepage": "https://github.com/PlayerEXDirectorsCut/WizardEx",
-    "sources": "https://github.com/PlayerEXDirectorsCut/WizardEx"
-  },
-  "license": "CC0-1.0",
-  "icon": "assets/wizardex/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.fabricmc.wizardex.WizardEx"
-    ],
-    "client": [
-      "net.fabricmc.wizardex.WizardExClient"
-    ]
-  },
-  "mixins": [
-    "wizardex.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.14.21",
-    "fabric-api": ">=0.83.0",
-    "minecraft": "1.20.1",
-    "java": ">=17",
-    "spell_power": ">=0.10.2+1.20.1"
-  }
+	"schemaVersion": 1,
+	"id": "wizardex",
+	"version": "${version}",
+	"name": "WizardEX: Directors Cut",
+	"description": "A ported mod that allows improving your Wizarding spell stats through leveing up in PlayerEx.",
+	"authors": [
+		"bibi-reden",
+		"Sewdohe (original author)",
+		"pokesmells"
+	],
+	"contact": {
+		"homepage": "https://github.com/PlayerEXDirectorsCut/WizardEx",
+		"sources": "https://github.com/PlayerEXDirectorsCut/WizardEx"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/wizardex/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.bibireden.wizardex.WizardEX"
+		],
+		"client": [
+			"com.bibireden.wizardex.WizardEXClient"
+		]
+	},
+	"mixins": [
+		"wizardex.mixins.json",
+		{
+			"config": "wizardex.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"fabric-api": ">=0.83.0",
+		"minecraft": "1.20.1",
+		"java": ">=17",
+		"spell_power": ">=0.10.2+1.20.1"
+	}
 }
