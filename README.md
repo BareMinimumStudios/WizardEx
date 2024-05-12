@@ -1,55 +1,46 @@
-# WidzardEx
+![WizardEX Banner](https://cdn.modrinth.com/data/cached_images/466708298b103a36c3be6f0885e4a89afbbe68a7.png)
 
-![WizardEX Menu](https://nextcloud.divnectar.com/s/FzqNi2JSxmwSMLq/preview)
+[![GitHub license](https://img.shields.io/badge/MIT-MIT?style=for-the-badge&label=LICENCE&labelColor=3C2750&color=FFFFFF&link=https%3A%2F%2Fgithub.com%2FPlayerEXDirectorsCut%2Fwizardex%2Fblob%2F1.20.1%2Fmain%2FLICENSE)](https://github.com/PlayerEXDirectorsCut/wizardex/blob/1.20.1/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/PlayerEXDirectorsCut/wizardex?style=for-the-badge&logo=github&labelColor=3C2750&color=FFFFFF&link=https%3A%2F%2Fgithub.com%2FPlayerEXDirectorsCut%2Fwizardex%2Fstargazers
+)](https://github.com/PlayerEXDirectorsCut/wizardex/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/PlayerEXDirectorsCut/wizardex?style=for-the-badge&logo=github&labelColor=3C2750&color=FFFFFF&link=https%3A%2F%2Fgithub.com%2FPlayerEXDirectorsCut%2Fwizardex%2Fforks
+)](https://github.com/PlayerEXDirectorsCut/wizardex/forks)
+[![GitHub issues](https://img.shields.io/github/issues/PlayerEXDirectorsCut/wizardex?style=for-the-badge&logo=github&label=ISSUES&labelColor=3C2750&link=https%3A%2F%2Fgithub.com%2FPlayerEXDirectorsCut%2Fwizardex%2Fissues
+)](https://github.com/PlayerEXDirectorsCut/wizardex/issues)
 
-No robes/staff here.
+[![docs](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/documentation/generic_vector.svg)](https://playerexdirectorscut.github.io/Bare-Minimum-Docs/)
+![mkdocs](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/mkdocs_vector.svg)
+![java17](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg)
+[![curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/wizardex-directors-cut)
+[![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/wizardex-directors-cut)
 
-Robes and staff bonuses are calculated when worn and shown in the menu!
+---
+
+![WizardEX Screen](https://cdn.modrinth.com/data/cached_images/9d6dc17860dec371c45bf2b06c3403da2dc93a22.png)
+
+💖 **No robes/staff here~**
+
+*Robes and staff bonuses are calculated when worn and shown in the menu!*
+
+---
+
 
 This mod aims to improve the [Wizarding](https://www.curseforge.com/minecraft/mc-mods/wizards) experience in Minecraft by integrating it with other fine mods such as itself.
 
-Currently the mod is only supporting integration with PlayerEx by adding a new "Magic" page to the E menu that allows the player to allocate thier 
-skill points gained by leveling up in PlayerEx on the available schools of magic.
+Currently, the mod only supports integration with PlayerEx by adding a new "Magic" page that allows the player to allocate their skill points gained by leveling up on the available schools of magic.
 
 The currently available schools are:
 - Fire
 - Frost
 - Arcane
+- Healing
+- Lightning
+- Soul
 
 ## How does it work?
 
-Each level in intellenge (base PlayerEx stat) raised improves all magic schools by 0.25 point. 
+Each level in intelligence (base PlayerEx stat) raised improves all magic schools by 0.25 points.
 
-Each level into a specific school of magic will raise it by 0.5, giving you an edge in that school of magic while hampering you at others.
+Each level into a specific school of magic will raise it by 0.5, giving you an edge in that school of magic while hampering you in others.
 
-The scaling is subject to change if imbalance is found, but this seems to work as it still takes ~10 levels into a specific school + netherite staff before you
-can one shot anything
-
-The wizards mod is in heavy development, more spells and magic schools will be available soon and I plan on supporting the mod as they release updates!
-
-## Future Plans:
-
-### Origins Support:
-Origins Classes Planned (NOT IMPLEMENTED!!!):
-
-Ice Mage: slows enemies, natural frost walking, empowered in colder temperatures, weakened in hotter temperatures, takes more damage to fire (soul fire damage equivalent perhaps), slowness immunity, ice school affinity (deals more dmg with frost magic)
-
-Fire Mage: burns enemies, lava walking, empowered in hot temperatures, weakened in colder temperatures, takes more damage from ice (examples would include ice hexblades, powdered snow, frozen waters, etc), fire immunity, fire school affinity
-
-Arcane Mage: empowered at night and in the dark, blindness immunity, can teleport (has cooldown of course), weaker during the day, arcane school affinity, takes more melee damage (I see arcane as being a more pure raw magic school so only makes sense that they would take a little more physical damage)
-
-Mage: more raw spellpower, has a bit more spell haste, has 3 less hearts, wither and poison resistance, takes more arrow damage, can give themselves a speed boost (cooldown of course) 
-
-(classes as imagined by Sideralis Music)
-
-## Will I support xx loader or xx version??
-
-We currently support 1.20.1, and will consider future updates.
-
-## Attribution
-
-Snowflake Icon: <a href="https://www.flaticon.com/free-icons/snowflake" title="snowflake icons">Snowflake icons created by Freepik - Flaticon</a>
-Lightning Icon: <a href="https://www.flaticon.com/free-icons/thunder" title="thunder icons">Thunder icons created by Freepik - Flaticon</a>
-Fire Icon: <a href="https://www.flaticon.com/free-icons/moon" title="moon icons">Moon icons created by Freepik - Flaticon</a>
-
-Original Data Pack created by µ⁻: [Curseforge Link](https://www.curseforge.com/minecraft/texture-packs/spell-power-attributes-playerex-relicex-stats)
+Check out the original mod [here!](https://www.curseforge.com/minecraft/mc-mods/wizardex)
