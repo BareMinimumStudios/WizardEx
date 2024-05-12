@@ -1,4 +1,4 @@
-package net.fabricmc.wizardex;
+package com.bibireden.wizardex;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -43,15 +43,22 @@ public class MagicPageLayer extends PageLayer {
     private static Supplier<Float> scaleX = () -> ExAPI.getConfig().textScaleX();
     private static Supplier<Float> scaleY = () -> ExAPI.getConfig().textScaleY();
     private static float scaleZ = 0.75F;
+    private static int X_BASE_OFFSET = 10;
 
     private PlayerData playerData;
 
-    private static final List<RenderComponent> COMPONENTS = new ArrayList<RenderComponent>();
-    public static final Identifier GUI = new Identifier("wizardex", "textures/gui/schools.png");
-    public static final Identifier schools = new Identifier("wizardex", "textures/gui/schools.png");
+    private static final List<RenderComponent> COMPONENTS = new ArrayList<>();
+    public static final Identifier schools = new Identifier(WizardEX.ID, "textures/gui/schools.png");
+    public static final Identifier orb = new Identifier(WizardEX.ID, "textures/gui/orb.png");
 
-    private static final List<Identifier> BUTTON_KEYS = ImmutableList.of(WizardEx.spell_power_fire,
-            WizardEx.spell_power_frost, WizardEx.spell_power_arcane, WizardEx.spell_power_healing);
+    private static final List<Identifier> BUTTON_KEYS = ImmutableList.of(
+            WizardEX.FIRE_SCHOOL,
+            WizardEX.FROST_SCHOOL,
+            WizardEX.ARCANE_SCHOOL,
+            WizardEX.LIGHTNING_SCHOOL,
+            WizardEX.SOUL_SCHOOL,
+            WizardEX.HEALING_SCHOOL
+    );
 
     public MagicPageLayer(HandledScreen<?> parent, ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(parent, handler, inventory, title);
@@ -97,30 +104,41 @@ public class MagicPageLayer extends PageLayer {
         // scaleX.get(), (this.y + 27) / scaleY.get(), 4210752);
 
         context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.fire_header"),
-                (int) ((this.x + 25) / scaleX.get()), (int) ((this.y + 40) / scaleY.get()),
+                (int) ((this.x + X_BASE_OFFSET + 22) / scaleX.get()), (int) ((this.y + 40) / scaleY.get()),
                 4210752, false);
         context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.frost_header"),
-                (int) ((this.x + 25) / scaleX.get()), (int) ((this.y + 60) / scaleY.get()),
+                (int) ((this.x + X_BASE_OFFSET + 22) / scaleX.get()), (int) ((this.y + 60) / scaleY.get()),
                 4210752, false);
         context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.arcane_header"),
-                (int) ((this.x + 25) / scaleX.get()),
+                (int) ((this.x + X_BASE_OFFSET + 22) / scaleX.get()),
                 (int) ((this.y + 80) / scaleY.get()), 4210752, false);
-        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.healing_header"),
-                (int) ((this.x + 25) / scaleX.get()),
-                (int) ((this.y + 100) / scaleY.get()), 4210752, false);
 
-        // this.textRenderer.draw(matrices,
-        // Text.translatable("wizardex.gui.page.tooltip.lightning"), (this.x + 30) /
-        // scaleX.get(),
-        // (this.y + 85) / scaleY.get(), 4210752);
+        // ->
+        // SECOND COLUMN
+        // ->
+
+        context.drawText(this.textRenderer,  Text.translatable("wizardex.gui.page.tooltip.lightning_header"),
+                (int) ((this.x + X_BASE_OFFSET + 100) / scaleX.get()),
+                (int) ((this.y + 40) / scaleY.get()), 4210752, false);
+
+        context.drawText(this.textRenderer,  Text.translatable("wizardex.gui.page.tooltip.soul_header"),
+                (int) ((this.x + X_BASE_OFFSET + 100) / scaleX.get()),
+                (int) ((this.y + 60) / scaleY.get()), 4210752, false);
+
+        context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.healing_header"),
+                (int) ((this.x + X_BASE_OFFSET + 100) / scaleX.get()),
+                (int) ((this.y + 80) / scaleY.get()), 4210752, false);
+
+
+        // BOTTOM
 
         context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_chance_header"),
-                (int) ((this.x + 95) / scaleX.get()),
-                (int) ((this.y + 50) / scaleY.get()), 4210752, false);
+                (int) ((this.x + X_BASE_OFFSET) / scaleX.get()),
+                (int) ((this.y + 130) / scaleY.get()), 4210752, false);
 
         context.drawText(this.textRenderer, Text.translatable("wizardex.gui.page.tooltip.crit_damage_header"),
-                (int) ((this.x + 95) / scaleX.get()),
-                (int) ((this.y + 65) / scaleY.get()), 4210752, false);
+                (int) ((this.x + X_BASE_OFFSET) / scaleX.get()),
+                (int) ((this.y + 145) / scaleY.get()), 4210752, false);
 
         matrices.pop();
 
@@ -133,14 +151,25 @@ public class MagicPageLayer extends PageLayer {
         // Set texture to get icons from
         // MUST BE 256x256 !!!
 
+        // Orb Icon
+        context.drawTexture(orb, this.x + X_BASE_OFFSET, this.y + 24, 6, 6, 0, 0, 16, 16, 16, 16);
+
         // Fire Icon
-        context.drawTexture(schools, this.x + 7, this.y + 38, 0, 0, 16, 16);
+        context.drawTexture(schools, this.x + X_BASE_OFFSET, this.y + 38, 0, 0, 16, 16);
         // Frost Icon
-        context.drawTexture(schools, this.x + 8, this.y + 58, 16, 0, 16, 16);
+        context.drawTexture(schools, this.x + X_BASE_OFFSET, this.y + 58, 16, 0, 16, 16);
         // Arcane Icon
-        context.drawTexture(schools, this.x + 8, this.y + 78, 48, 0, 16, 16);
+        context.drawTexture(schools, this.x + X_BASE_OFFSET, this.y + 78, 48, 0, 16, 16);
+
+        // COLUMN 2
+
+        // Lightning Icon
+        context.drawTexture(schools, this.x + X_BASE_OFFSET + 78, this.y + 38, 32, 0, 16, 16);
+        // Soul Icon
+        context.drawTexture(schools, this.x + X_BASE_OFFSET + 78, this.y + 58, 80, 0, 16, 16);
         // Healing Icon
-        context.drawTexture(schools, this.x + 8, this.y + 105, 64, 0, 16, 16);
+        context.drawTexture(schools, this.x + X_BASE_OFFSET + 78, this.y + 78, 64, 0, 16, 16);
+
 
         // add the button to level up each school of magic
         this.forEachScreenButton(button -> {
@@ -179,12 +208,16 @@ public class MagicPageLayer extends PageLayer {
         this.playerData = ExAPI.PLAYER_DATA.get(this.client.player);
 
         var x = 69;
+        var x2 = 154;
 
         // Fire level button
         this.addDrawableChild(createAttributeButton(x, 40, BUTTON_KEYS.get(0), this::buttonPressed));
         this.addDrawableChild(createAttributeButton(x, 60, BUTTON_KEYS.get(1), this::buttonPressed));
         this.addDrawableChild(createAttributeButton(x, 80, BUTTON_KEYS.get(2), this::buttonPressed));
-        this.addDrawableChild(createAttributeButton(x, 100, BUTTON_KEYS.get(3), this::buttonPressed));
+
+        this.addDrawableChild(createAttributeButton(x2, 40, BUTTON_KEYS.get(3), this::buttonPressed));
+        this.addDrawableChild(createAttributeButton(x2, 60, BUTTON_KEYS.get(4), this::buttonPressed));
+        this.addDrawableChild(createAttributeButton(x2, 80, BUTTON_KEYS.get(5), this::buttonPressed));
     }
 
     private Tooltip createAttributeTooltip(Identifier key) {
@@ -224,42 +257,47 @@ public class MagicPageLayer extends PageLayer {
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerAll() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_all);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.ALL_SCHOOLS);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerFire() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_fire);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.FIRE_SCHOOL);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerFrost() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_frost);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.FROST_SCHOOL);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerLightning() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_lightning);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.LIGHTNING_SCHOOL);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerHealing() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_healing);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.HEALING_SCHOOL);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerArcane() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_arcane);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.ARCANE_SCHOOL);
+        return spellPowerSupplier;
+    }
+
+    public static Supplier<EntityAttribute> GetSpellPowerSoul() {
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.SOUL_SCHOOL);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerCritChance() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_crit_chance);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.CRIT_CHANCE_SP);
         return spellPowerSupplier;
     }
 
     public static Supplier<EntityAttribute> GetSpellPowerCritDamage() {
-        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEx.spell_power_crit_damage);
+        Supplier<EntityAttribute> spellPowerSupplier = EntityAttributeSupplier.of(WizardEX.CRIT_DAMAGE_SP);
         return spellPowerSupplier;
     }
 
@@ -294,9 +332,9 @@ public class MagicPageLayer extends PageLayer {
             // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[0]").formatted(Formatting.GRAY));
             // tooltip.add(Text.translatable("playerex.gui.page.attributes.tooltip.skill_points[1]").formatted(Formatting.GRAY));
             return tooltip;
-        }, 8, 25));
+        }, X_BASE_OFFSET + 9, 25));
 
-        // SECTION: WizardEx Stats
+        // SECTION: WizardEX Stats
         // add Indiviual magic school stats
         // ----------------------------------
         COMPONENTS.add(RenderComponent.of(GetSpellPowerFire(), value -> {
@@ -308,7 +346,7 @@ public class MagicPageLayer extends PageLayer {
 
             ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerFire());
             return tooltip;
-        }, 56, 40));
+        }, 60, 40));
 
         COMPONENTS.add(RenderComponent.of(GetSpellPowerFrost(), value -> {
             var intValue = value.intValue();
@@ -319,7 +357,7 @@ public class MagicPageLayer extends PageLayer {
 
             ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerFrost());
             return tooltip;
-        }, 56, 60));
+        }, 60, 60));
 
         COMPONENTS.add(RenderComponent.of(GetSpellPowerArcane(), value -> {
             var intValue = value.intValue();
@@ -330,7 +368,31 @@ public class MagicPageLayer extends PageLayer {
 
             ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerArcane());
             return tooltip;
-        }, 56, 80));
+        }, 60, 80));
+
+        // SECOND COLUMN
+
+        COMPONENTS.add(RenderComponent.of(GetSpellPowerLightning(), value -> {
+            var intValue = value.intValue();
+            return Text.of(String.valueOf(intValue));
+        }, value -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.lightning_specialization")));
+
+            ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerLightning());
+            return tooltip;
+        }, 145, 40));
+
+        COMPONENTS.add(RenderComponent.of(GetSpellPowerSoul(), value -> {
+            var intValue = value.intValue();
+            return Text.of(String.valueOf(intValue));
+        }, value -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.soul_specialization")));
+
+            ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerSoul());
+            return tooltip;
+        }, 145, 60));
 
         COMPONENTS.add(RenderComponent.of(GetSpellPowerHealing(), value -> {
             var intValue = value.intValue();
@@ -339,9 +401,9 @@ public class MagicPageLayer extends PageLayer {
             List<Text> tooltip = new ArrayList<Text>();
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.healing_specialization")));
 
-            // ClientUtil.appendChildrenToTooltip(tooltip, ExAPI.CONSTITUTION);
+            ClientUtil.appendChildrenToTooltip(tooltip, GetSpellPowerHealing());
             return tooltip;
-        }, 56, 100));
+        }, 145, 80));
 
         COMPONENTS.add(RenderComponent.of(entity -> {
             Double critChance = entity.getAttributeValue(GetSpellPowerCritChance().get());
@@ -352,7 +414,7 @@ public class MagicPageLayer extends PageLayer {
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_chance")));
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
             return tooltip;
-        }, 143, 50));
+        }, X_BASE_OFFSET + 45, 130));
         COMPONENTS.add(RenderComponent.of(entity -> {
             Double critDmg = entity.getAttributeValue(GetSpellPowerCritDamage().get());
             var statFormatted = new DecimalFormat("###");
@@ -362,7 +424,7 @@ public class MagicPageLayer extends PageLayer {
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.crit_damage")));
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
             return tooltip;
-        }, 143, 65));
+        }, X_BASE_OFFSET + 45, 145));
 
         // SECTION: Spellpower Stats
         // show resulting stats from SpellPower API
@@ -390,15 +452,6 @@ public class MagicPageLayer extends PageLayer {
             return tooltip;
         }, 32, 67));
         COMPONENTS.add(RenderComponent.of(entity -> {
-            var school = SpellPower.getSpellPower(SpellSchools.HEALING, entity);
-            var value = school.baseValue();
-            return Text.of(String.valueOf(value));
-        }, entity -> {
-            List<Text> tooltip = new ArrayList<Text>();
-            tooltip.add((Text.of("Healing")));
-            return tooltip;
-        }, 32, 107));
-        COMPONENTS.add(RenderComponent.of(entity -> {
             var school = SpellPower.getSpellPower(SpellSchools.ARCANE, entity);
             var value = school.baseValue();
             var statFormatted = new DecimalFormat("###.##");
@@ -409,5 +462,41 @@ public class MagicPageLayer extends PageLayer {
             tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
             return tooltip;
         }, 32, 87));
+
+        // 2nd Row
+
+        COMPONENTS.add(RenderComponent.of(entity -> {
+            var school = SpellPower.getSpellPower(SpellSchools.LIGHTNING, entity);
+            var value = school.baseValue();
+            var statFormatted = new DecimalFormat("###.##");
+            return Text.of(statFormatted.format(value));
+        }, entity -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.lightning_bonus")));
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+            return tooltip;
+        }, 110, 47));
+        COMPONENTS.add(RenderComponent.of(entity -> {
+            var school = SpellPower.getSpellPower(SpellSchools.SOUL, entity);
+            var value = school.baseValue();
+            var statFormatted = new DecimalFormat("###.##");
+            return Text.of(statFormatted.format(value));
+        }, entity -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.soul_bonus")));
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+            return tooltip;
+        }, 110, 67));
+        COMPONENTS.add(RenderComponent.of(entity -> {
+            var school = SpellPower.getSpellPower(SpellSchools.HEALING, entity);
+            var value = school.baseValue();
+            var statFormatted = new DecimalFormat("###.##");
+            return Text.of(statFormatted.format(value));
+        }, entity -> {
+            List<Text> tooltip = new ArrayList<Text>();
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.healing_bonus")));
+            tooltip.add((Text.translatable("wizardex.gui.page.tooltip.item_bonus")));
+            return tooltip;
+        }, 110, 87));
     }
 }

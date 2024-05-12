@@ -1,8 +1,10 @@
 {
 	"required": true,
-	"package": "com.bibireden.wizardex.mixin",
+	"package": "com.bibireden.wizardex.mixin.client",
 	"compatibilityLevel": "JAVA_17",
-	"mixins": [],
+	"client": [
+		"EntryMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
