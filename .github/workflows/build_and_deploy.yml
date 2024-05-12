@@ -59,14 +59,14 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           curseforge-dependencies: |
             fabric-api@0.83.0+1.20.1(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)
-            data-attributes-directors-cut@1.6.0+1.20.1(required){modrinth:KCGxOJsE}{curseforge:955929}#(ignore:github)
+            playerex-directors-cut@3.7.0+1.20.1(required){modrinth:4UKlJSdk}{curseforge:958325}#(ignore:github)
             spell_power@0.10.2+1.20.1(required){modrinth:8ooWzSQP}{curseforge:771265}#(ignore:github)
 
           modrinth-id: XX7fPDsr
           modrinth-token: "${{ secrets.MODRINTH_TOKEN }}"
           modrinth-dependencies: |
             fabric-api@0.83.0+1.20.1(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)
-            data-attributes-directors-cut@1.6.0+1.20.1(required){modrinth:KCGxOJsE}{curseforge:955929}#(ignore:github)
+            playerex-directors-cut@3.7.0+1.20.1(required){modrinth:4UKlJSdk}{curseforge:958325}#(ignore:github)
             spell_power@0.10.2+1.20.1(required){modrinth:8ooWzSQP}{curseforge:771265}#(ignore:github)
 
           github-tag: "${{ steps.mod_version.outputs.mod_version }}"
