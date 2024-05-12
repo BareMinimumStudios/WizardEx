@@ -16,18 +16,18 @@ public class WizardEX implements ModInitializer {
 
 
 	// Overall spell stat gain from int levels
-	public static final Identifier spell_power_all = new Identifier(ID, "spell_power_all");
+	public static final Identifier ALL_SCHOOLS = new Identifier(ID, "spell_power_all");
 
 	// Indvidual Spell Levels
-	public static final Identifier spell_power_fire = new Identifier(ID, "spell_power_fire");
-	public static final Identifier spell_power_frost = new Identifier(ID, "spell_power_frost");
-	public static final Identifier spell_power_lightning = new Identifier(ID, "spell_power_lightning");
-	public static final Identifier spell_power_soul = new Identifier(ID, "spell_power_soul");
-	public static final Identifier spell_power_arcane = new Identifier(ID, "spell_power_arcane");
-	public static Identifier spell_power_healing = new Identifier(ID, "spell_power_healing");
+	public static final Identifier FIRE_SCHOOL = new Identifier(ID, "spell_power_fire");
+	public static final Identifier FROST_SCHOOL = new Identifier(ID, "spell_power_frost");
+	public static final Identifier LIGHTNING_SCHOOL = new Identifier(ID, "spell_power_lightning");
+	public static final Identifier SOUL_SCHOOL = new Identifier(ID, "spell_power_soul");
+	public static final Identifier ARCANE_SCHOOL = new Identifier(ID, "spell_power_arcane");
+	public static Identifier HEALING_SCHOOL = new Identifier(ID, "spell_power_healing");
 
-	public static final Identifier spell_power_crit_chance = new Identifier("spell_power:critical_chance");
-	public static final Identifier spell_power_crit_damage = new Identifier("spell_power:critical_damage");
+	public static final Identifier CRIT_CHANCE_SP = new Identifier("spell_power:critical_chance");
+	public static final Identifier CRIT_DAMAGE_SP = new Identifier("spell_power:critical_damage");
 
 	@Override
 	public void onInitialize() {
@@ -37,15 +37,15 @@ public class WizardEX implements ModInitializer {
 
 	private void registerRefundConditions() {
 		ExAPI.registerRefundCondition((data, player) -> {
-			var attribute = EntityAttributeSupplier.of(spell_power_fire);
+			var attribute = EntityAttributeSupplier.of(FIRE_SCHOOL);
 			return DataAttributesAPI.ifPresent(player, attribute, 0.0D, value -> data.get(attribute));
 		});
 		ExAPI.registerRefundCondition((data, player) -> {
-			var attribute = EntityAttributeSupplier.of(spell_power_frost);
+			var attribute = EntityAttributeSupplier.of(FROST_SCHOOL);
 			return DataAttributesAPI.ifPresent(player, attribute, 0.0D, value -> data.get(attribute));
 		});
 		ExAPI.registerRefundCondition((data, player) -> {
-			var attribute = EntityAttributeSupplier.of(spell_power_arcane);
+			var attribute = EntityAttributeSupplier.of(ARCANE_SCHOOL);
 			return DataAttributesAPI.ifPresent(player, attribute, 0.0D, value -> data.get(attribute));
 		});
 	}

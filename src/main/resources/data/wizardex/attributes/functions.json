@@ -85,6 +85,12 @@
                 "behaviour": "ADDITION",
                 "value": 0.5
             }
+        },
+        "wizardex:spell_power_soul": {
+            "spell_power:soul": {
+                "behaviour": "ADDITION",
+                "value": 0.5
+            }
         }
     }
 }
