@@ -5,23 +5,30 @@
 	"name": "WizardEX: Directors Cut",
 	"description": "A ported mod that allows improving your Wizarding spell stats through leveing up in PlayerEx.",
 	"authors": [
-		"bibi-reden",
+		"bibireden",
 		"Sewdohe (original author)",
-		"pokesmells"
+		"pokesmells (contributor)",
+		"Bare Minimum Studios (B.M.S)"
 	],
 	"contact": {
-		"homepage": "https://github.com/PlayerEXDirectorsCut/WizardEx",
-		"sources": "https://github.com/PlayerEXDirectorsCut/WizardEx"
+		"homepage": "https://github.com/BareMinimumStudios/WizardEx",
+		"sources": "https://github.com/BareMinimumStudios/WizardEx"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/wizardex/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.bibireden.wizardex.WizardEX"
+			{
+				"adapter": "kotlin",
+				"value": "com.bibireden.wizardex.WizardEX"
+			}
 		],
 		"client": [
-			"com.bibireden.wizardex.WizardEXClient"
+			{
+				"adapter": "kotlin",
+				"value": "com.bibireden.wizardex.WizardEXClient"
+			}
 		]
 	},
 	"mixins": [
@@ -33,10 +40,26 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.14.21",
-		"fabric-api": ">=0.83.0",
+		"fabric-api": ">=0.92.2",
+		"fabric-language-kotlin": ">=1.10.19+kotlin.1.9.23",
 		"minecraft": "1.20.1",
 		"java": ">=17",
 		"spell_power": ">=0.10.2+1.20.1",
-		"playerex": ">=3.7.0+1.20.1"
+		"owo-lib": ">=0.11.2+1.20",
+		"playerex": ">=4.0.0+1.20.1"
+	},
+	"custom": {
+		"mc-publish": {
+			"modrinth": "XX7fPDsr",
+			"curseforge": 961862,
+			"loaders": ["fabric", "quilt"],
+			"dependencies": [
+				"fabric-api@>=0.92.2+1.20.1(required){modrinth:P7dR8mSH}{curseforge:306612}#(ignore:github)",
+				"fabric-language-kotlin@>=1.9.5+kotlin.1.8.22(required){modrinth:Ha28R6CL}{curseforge:308769}#(ignore:github)",
+				"playerex-directors-cut@3.7.0+1.20.1(required){modrinth:4UKlJSdk}{curseforge:958325}#(ignore:github)",
+				"owo-lib@0.11.2(required){modrinth:ccKDOlHs}{curseforge:532610}#(ignore:github)",
+				"spell-engine@>=0.15.8+1.20.1(required){modrinth:XvoWJaA2}{curseforge:807653}#(ignore:github)"
+			]
+		}
 	}
 }

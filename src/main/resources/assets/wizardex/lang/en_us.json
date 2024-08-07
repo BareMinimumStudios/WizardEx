@@ -1,13 +1,5 @@
 {
   "wizardex.gui.page.title": "Magic",
-  "wizardex.gui.page.tooltip.fire_header": "Fire:",
-  "wizardex.gui.page.tooltip.frost_header": "Frost:",
-  "wizardex.gui.page.tooltip.arcane_header": "Arcane:",
-  "wizardex.gui.page.tooltip.lightning_header": "Lightning:",
-  "wizardex.gui.page.tooltip.soul_header": "Soul:",
-  "wizardex.gui.page.tooltip.healing_header": "Healing:",
-  "wizardex.gui.page.tooltip.crit_damage_header": "Crit Damage:",
-  "wizardex.gui.page.tooltip.crit_chance_header": "Crit Chance:",
   "wizardex.gui.page.tooltip.fire_specialization": "Fire Specialization",
   "wizardex.gui.page.tooltip.frost_specialization": "Frost Specialization",
   "wizardex.gui.page.tooltip.arcane_specialization": "Arcane Specialization",
@@ -22,5 +14,18 @@
   "wizardex.gui.page.tooltip.arcane_bonus": "Current arcane bonus, ",
   "wizardex.gui.page.tooltip.lightning_bonus": "Current lightning bonus, ",
   "wizardex.gui.page.tooltip.soul_bonus": "Current soul bonus, ",
-  "wizardex.gui.page.tooltip.healing_bonus": "Current healing bonus, "
+  "wizardex.gui.page.tooltip.healing_bonus": "Current healing bonus, ",
+
+  "wizardex.ui.category.spell_schools": "Spell Schools",
+  "wizardex.ui.main.categories.criticals": "Criticals",
+
+  "attribute.name.wizardex.schools.fire": "Fire",
+  "attribute.name.wizardex.schools.frost": "Frost",
+  "attribute.name.wizardex.schools.arcane": "Arcane",
+  "attribute.name.wizardex.schools.lightning": "Lightning",
+  "attribute.name.wizardex.schools.soul": "Soul",
+  "attribute.name.wizardex.schools.healing": "Healing",
+
+  "attribute.name.wizardex.critical_damage": "Critical Damage",
+  "attribute.name.wizardex.critical_chance": "Critical Chance"
 }
