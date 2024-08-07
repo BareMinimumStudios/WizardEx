@@ -70,6 +70,14 @@ repositories {
 		name = "Curseforge"
 		url = "https://www.cursemaven.com"
 	}
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+	maven {
+		name = 'Quilt'
+		url = "https://maven.quiltmc.org/repository/release/"
+	}
 }
 
 loom {
