@@ -1,0 +1,14 @@
+{
+    "entries": {
+        "minecraft:player": {
+            "wizardex:critical_chance": 0.0,
+            "wizardex:critical_damage": 0.0,
+            "wizardex:schools.fire": 0.0,
+            "wizardex:schools.frost": 0.0,
+            "wizardex:schools.soul": 0.0,
+            "wizardex:schools.arcane": 0.0,
+            "wizardex:schools.healing": 0.0,
+            "wizardex:schools.lightning": 0.0
+        }
+    }
+}

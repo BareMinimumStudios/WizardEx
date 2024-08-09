@@ -1,0 +1,106 @@
+{
+    "entries": {
+        "playerex:dexterity": [
+            {
+                "id": "wizardex:critical_damage",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "playerex:intelligence": [
+            {
+                "id": "wizardex:schools.fire",
+                "behavior": "Add",
+                "value": 0.25
+            },
+            {
+                "id": "wizardex:schools.frost",
+                "behavior": "Add",
+                "value": 0.25
+            },
+            {
+                "id": "wizardex:schools.soul",
+                "behavior": "Add",
+                "value": 0.25
+            },
+            {
+                "id": "wizardex:schools.arcane",
+                "behavior": "Add",
+                "value": 0.25
+            },
+            {
+                "id": "wizardex:schools.healing",
+                "behavior": "Add",
+                "value": 0.25
+            },
+            {
+                "id": "wizardex:schools.lightning",
+                "behavior": "Add",
+                "value": 0.25
+            }
+        ],
+        "playerex:luckiness": [
+            {
+                "id": "wizardex:critical_chance",
+                "behavior": "Add",
+                "value": 0.25
+            }
+        ],
+        "wizardex:critical_chance": [
+            {
+                "id": "spell_power:critical_chance",
+                "behavior": "Add",
+                "value": 1.0
+            }
+        ],
+        "wizardex:critical_damage": [
+            {
+                "id": "spell_power:critical_damage",
+                "behavior": "Add",
+                "value": 1.0
+            }
+        ],
+        "wizardex:schools.fire": [
+            {
+                "id": "spell_power:fire",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "wizardex:schools.frost": [
+            {
+                "id": "spell_power:frost",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "wizardex:schools.lightning": [
+            {
+                "id": "spell_power:lightning",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "wizardex:schools.healing": [
+            {
+                "id": "spell_power:healing",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "wizardex:schools.arcane": [
+            {
+                "id": "spell_power:arcane",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ],
+        "wizardex:schools.soul": [
+            {
+                "id": "spell_power:soul",
+                "behavior": "Add",
+                "value": 0.5
+            }
+        ]
+    }
+}
