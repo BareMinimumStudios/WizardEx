@@ -1,0 +1,14 @@
+{
+    "entries": {
+        "wizardex:critical_chance": {
+            "enabled": true,
+            "smoothness": 1.0,
+            "format": "Percentage"
+        },
+        "wizardex:critical_damage": {
+            "enabled": true,
+            "smoothness": 1.0,
+            "format": "Percentage"
+        }
+    }
+}
