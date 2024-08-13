@@ -16,9 +16,9 @@ import io.wispforest.owo.ui.core.*
 import net.minecraft.network.chat.Component
 
 class WizardEXMenu : MenuComponent(algorithm = Algorithm.VERTICAL) {
-    private val CRITICALS: List<Pair<EntityAttributeSupplier, FormattingPredicate>> = listOf(
-        EntityAttributeSupplier(WizardEXAttributes.CRITICAL_DAMAGE.id) to { it.toInt().toString() },
-        EntityAttributeSupplier(WizardEXAttributes.CRITICAL_CHANCE.id) to { "+${it.toInt()}%" }
+    private val CRITICALS: List<EntityAttributeSupplier> = listOf(
+        EntityAttributeSupplier(WizardEXAttributes.CRITICAL_DAMAGE.id),
+        EntityAttributeSupplier(WizardEXAttributes.CRITICAL_CHANCE.id)
     )
 
     override fun build(screenRoot: FlowLayout) {
