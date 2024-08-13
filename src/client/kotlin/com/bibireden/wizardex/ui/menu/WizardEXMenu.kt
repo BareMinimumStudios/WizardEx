@@ -5,6 +5,7 @@ import com.bibireden.playerex.ext.id
 import com.bibireden.playerex.ui.components.*
 import com.bibireden.playerex.ui.components.buttons.AttributeButtonComponent
 import com.bibireden.playerex.ui.components.labels.AttributeLabelComponent
+import com.bibireden.playerex.ui.helper.InputHelper
 import com.bibireden.playerex.ui.util.FormattingPredicates
 import com.bibireden.wizardex.WizardEX
 import com.bibireden.wizardex.attributes.WizardEXAttributes
@@ -26,8 +27,8 @@ class WizardEXMenu : MenuComponent(algorithm = Algorithm.VERTICAL) {
 
         child(
             Containers.verticalScroll(
+                Sizing.fill(45),
                 Sizing.fill(100),
-                Sizing.fill(60),
                 Containers.verticalFlow(Sizing.fill(100), Sizing.content()).apply {
                     child(Containers.horizontalFlow(Sizing.fill(100), Sizing.content(2)).apply {
                         child(Components.label(Component.translatable("wizardex.ui.category.spell_schools")))
@@ -35,7 +36,7 @@ class WizardEXMenu : MenuComponent(algorithm = Algorithm.VERTICAL) {
                             Components.textBox(Sizing.fixed(27))
                                 .also {
                                     it.setMaxLength(4)
-                                    it.setFilter { s -> s.toUIntOrNull() != null }
+                                    it.setFilter(InputHelper::isUIntInput)
                                 }
                                 .text("1")
                                 .verticalSizing(Sizing.fixed(10))
@@ -44,29 +45,51 @@ class WizardEXMenu : MenuComponent(algorithm = Algorithm.VERTICAL) {
                         )
                     })
                     child(Components.box(Sizing.fill(100), Sizing.fixed(2)))
-                    verticalAlignment(VerticalAlignment.TOP)
+                    verticalAlignment(VerticalAlignment.CENTER)
                     gap(5)
                     padding(Insets.right(5))
                     children(WizardEX.SCHOOLS.map { AttributeComponent(it, player, playerComponent!!) })
                 }.id("wizardry")
             )
-                .positioning(Positioning.relative(50, 50))
+                .positioning(Positioning.relative(0, 50))
         )
+
         child(Containers.verticalScroll(
-            Sizing.fill(100),
-            Sizing.fill(40),
+            Sizing.fill(50),
+            Sizing.fill(20),
             Containers.verticalFlow(Sizing.fill(100), Sizing.content()).apply {
-                child(AttributeListComponent("wizardex.ui.main.categories.criticals", player, CRITICALS))
+                child(
+                    AttributeListComponent("wizardex.ui.main.categories.criticals", player, CRITICALS)
+                        .horizontalSizing(Sizing.fill(100))
+                )
                 padding(Insets.right(5))
                 gap(8)
             }
-        ))
+        )
+            .positioning(Positioning.relative(100, 0))
+        )
+
+        child(Containers.verticalScroll(
+            Sizing.fill(50),
+            Sizing.fill(60),
+            Containers.verticalFlow(Sizing.fill(100), Sizing.content()).apply {
+                child(
+                    AttributeListComponent("wizardex.ui.main.categories.schools", player, WizardEX.SPELL_POWER_SCHOOLS.map { EntityAttributeSupplier(it.id) })
+                        .horizontalSizing(Sizing.fill(100))
+                )
+                padding(Insets.right(5))
+                gap(8)
+            }
+            ).positioning(Positioning.relative(100, 60))
+        )
 
         onAttributeUpdated.subscribe { _, _ ->
             forEachDescendant { descendant ->
-                if (descendant is AttributeComponent) descendant.refresh()
-                if (descendant is AttributeButtonComponent) descendant.refresh()
-                if (descendant is AttributeLabelComponent) descendant.refresh()
+                when (descendant) {
+                    is AttributeComponent -> descendant.refresh()
+                    is AttributeLabelComponent -> descendant.refresh()
+                    is AttributeListEntryComponent -> descendant.refresh()
+                }
             }
         }
     }
