@@ -3,10 +3,8 @@ package com.bibireden.wizardex.ui.menu
 import com.bibireden.data_attributes.api.attribute.EntityAttributeSupplier
 import com.bibireden.playerex.ext.id
 import com.bibireden.playerex.ui.components.*
-import com.bibireden.playerex.ui.components.buttons.AttributeButtonComponent
 import com.bibireden.playerex.ui.components.labels.AttributeLabelComponent
 import com.bibireden.playerex.ui.helper.InputHelper
-import com.bibireden.playerex.ui.util.FormattingPredicates
 import com.bibireden.wizardex.WizardEX
 import com.bibireden.wizardex.attributes.WizardEXAttributes
 import io.wispforest.owo.ui.component.Components

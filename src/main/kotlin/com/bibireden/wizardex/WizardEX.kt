@@ -1,12 +1,6 @@
 package com.bibireden.wizardex
 
-import com.bibireden.data_attributes.api.attribute.StackingBehavior
-import com.bibireden.data_attributes.api.factory.DefaultAttributeFactory
-import com.bibireden.data_attributes.config.functions.AttributeFunction
-import com.bibireden.data_attributes.data.EntityTypeData
 import com.bibireden.playerex.api.PlayerEXAPI
-import com.bibireden.playerex.api.attribute.PlayerEXAttributes
-import com.bibireden.playerex.ext.id
 import com.bibireden.wizardex.attributes.WizardEXAttributes
 import net.fabricmc.api.ModInitializer
 import net.minecraft.resources.ResourceLocation
@@ -45,7 +39,7 @@ object WizardEX : ModInitializer {
     fun id(str: String): ResourceLocation = ResourceLocation.tryBuild(MOD_ID, str)!!
 
     private fun registerRefundConditions() {
-        SPELL_POWER_SCHOOLS.forEach { school -> PlayerEXAPI.registerRefundCondition { data, player -> data.get(school.attribute) } }
+        SPELL_POWER_SCHOOLS.forEach { school -> PlayerEXAPI.registerRefundCondition { data, _ -> data.get(school.attribute) } }
     }
 
     override fun onInitialize() {

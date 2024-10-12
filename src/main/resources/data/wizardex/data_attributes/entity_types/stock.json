@@ -1,14 +1,30 @@
 {
     "entries": {
         "minecraft:player": {
-            "wizardex:critical_chance": 0.0,
-            "wizardex:critical_damage": 0.0,
-            "wizardex:schools.fire": 0.0,
-            "wizardex:schools.frost": 0.0,
-            "wizardex:schools.soul": 0.0,
-            "wizardex:schools.arcane": 0.0,
-            "wizardex:schools.healing": 0.0,
-            "wizardex:schools.lightning": 0.0
+            "wizardex:critical_chance": {
+                "value": 0.0
+            },
+            "wizardex:critical_damage": {
+                "value": 0.0
+            },
+            "wizardex:schools.fire": {
+                "value": 0.0
+            },
+            "wizardex:schools.frost": {
+                "value": 0.0
+            },
+            "wizardex:schools.soul": {
+                "value": 0.0
+            },
+            "wizardex:schools.arcane": {
+                "value": 0.0
+            },
+            "wizardex:schools.healing": {
+                "value": 0.0
+            },
+            "wizardex:schools.lightning": {
+                "value": 0.0
+            }
         }
     }
 }
