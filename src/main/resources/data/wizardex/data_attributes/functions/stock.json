@@ -4,14 +4,14 @@
             "wizardex:critical_damage": {
                 "enabled": true,
                 "behavior": "Add",
-                "value": 0.005
+                "value": 0.01
             }
         },
         "playerex:luckiness": {
             "wizardex:critical_chance": {
                 "enabled": true,
                 "behavior": "Add",
-                "value": 0.025
+                "value": 0.02
             }
         },
         "wizardex:critical_chance": {
@@ -25,7 +25,7 @@
             "spell_power:critical_damage": {
                 "enabled": true,
                 "behavior": "Add",
-                "value": 1000.0
+                "value": 100.0
             }
         },
         "wizardex:schools.fire": {
