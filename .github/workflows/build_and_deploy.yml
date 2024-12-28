@@ -1,13 +1,6 @@
 name: Deployment (J17)
 on:
-  push:
-    branches-ignore:
-      - master
-      - "**/dev**"
-      - "**-dev"
-      - "**-dev**"
-      - dev
-
+  workflow_dispatch: 
 
 jobs:
   build-and-deploy:
