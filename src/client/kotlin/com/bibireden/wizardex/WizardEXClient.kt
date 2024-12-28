@@ -1,6 +1,5 @@
 package com.bibireden.wizardex
 
-import com.bibireden.playerex.PlayerEX
 import com.bibireden.playerex.registry.PlayerEXMenuRegistry
 import com.bibireden.wizardex.ui.menu.WizardEXMenu
 
@@ -13,6 +12,6 @@ object WizardEXClient : ClientModInitializer {
     override fun onInitializeClient() {
         WizardEX.LOGGER.debug("Initializing client!")
 
-        PlayerEXMenuRegistry.register(PlayerEX.id("main"), WizardEXMenu::class.java)
+        PlayerEXMenuRegistry.register(WizardEX.id("main"), WizardEXMenu::class.java)
     }
 }

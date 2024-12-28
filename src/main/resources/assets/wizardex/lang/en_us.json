@@ -1,4 +1,9 @@
 {
+  "playerex.ui.menu.wizardex.main": [
+    {"text": "⚚ ", "color": "#aa62be"},
+    {"text": "WizardEX", "color": "white"}
+  ],
+
   "wizardex.gui.page.title": "Magic",
   "wizardex.gui.page.tooltip.fire_specialization": "Fire Specialization",
   "wizardex.gui.page.tooltip.frost_specialization": "Frost Specialization",
@@ -16,9 +21,9 @@
   "wizardex.gui.page.tooltip.soul_bonus": "Current soul bonus, ",
   "wizardex.gui.page.tooltip.healing_bonus": "Current healing bonus, ",
 
-  "wizardex.ui.category.spell_schools": "Spell Schools",
-  "wizardex.ui.main.categories.criticals": "Criticals",
-  "wizardex.ui.main.categories.schools": "Schools",
+  "wizardex.ui.category.spell_schools": "SPELL SCHOOLS",
+  "wizardex.ui.main.categories.criticals": "✧ CRITICALS",
+  "wizardex.ui.main.categories.schools": "✎ SCHOOLS",
 
   "attribute.name.wizardex.schools.fire": "Fire",
   "attribute.name.wizardex.schools.frost": "Frost",
