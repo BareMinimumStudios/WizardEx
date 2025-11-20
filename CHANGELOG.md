@@ -1,3 +1,2 @@
 ## Changes 🌽
-- Updated to function with the latest PlayerEX.
-- Retouched UI.
+- Retargeted to use the right attributes for refund.

@@ -39,7 +39,7 @@ object WizardEX : ModInitializer {
     fun id(str: String): ResourceLocation = ResourceLocation.tryBuild(MOD_ID, str)!!
 
     private fun registerRefundConditions() {
-        SPELL_POWER_SCHOOLS.forEach { school -> PlayerEXAPI.registerRefundCondition { data, _ -> data.get(school.attribute) } }
+        SCHOOLS.forEach { school -> PlayerEXAPI.registerRefundCondition { data, _ -> data.get(school) } }
     }
 
     override fun onInitialize() {

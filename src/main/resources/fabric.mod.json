@@ -14,7 +14,7 @@
 		"homepage": "https://github.com/BareMinimumStudios/WizardEx",
 		"sources": "https://github.com/BareMinimumStudios/WizardEx"
 	},
-	"license": "MIT",
+	"license": "BML",
 	"icon": "assets/wizardex/icon.png",
 	"environment": "*",
 	"entrypoints": {
